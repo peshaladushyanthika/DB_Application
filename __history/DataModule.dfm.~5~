@@ -1,0 +1,20 @@
+object DM: TDM
+  Height = 750
+  Width = 1000
+  PixelsPerInch = 120
+  object Connection: TMyConnection
+    Database = 'customers'
+    Username = 'root'
+    Connected = True
+    LoginPrompt = False
+    Left = 168
+    Top = 120
+  end
+  object QrySelect: TMyQuery
+    Connection = Connection
+    SQL.Strings = (
+      'SELECT * FROM profile')
+    Left = 472
+    Top = 136
+  end
+end

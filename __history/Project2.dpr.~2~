@@ -1,0 +1,18 @@
+program Project2;
+
+uses
+  Vcl.Forms,
+  ProfileList in 'ProfileList.pas' {Form2},
+  ProfileDetails in 'ProfileDetails.pas' {Form1},
+  DataModule in 'DataModule.pas' {DM: TDataModule};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TDM, DM);
+  Application.Run;
+end.
