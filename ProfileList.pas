@@ -38,7 +38,7 @@ implementation
 {$R *.dfm}
 
 uses DataModule,ProfileDetails;
-
+//delete records
 procedure TProfile.ButtonDeleteClick(Sender: TObject);
 begin
 if DBGrid.Fields[0].Text = '' then
@@ -49,7 +49,7 @@ if DBGrid.Fields[0].Text = '' then
 
   if MessageDlg('Are you sure you want to delete this record?',   mtConfirmation, [mbYes, mbNo], 0) = mrYes then
      begin
-        with DM.QryDelete do
+        with DM.QryDelete do   //used a different dataset here
            begin
              active := false;
              sql.Clear;
@@ -64,19 +64,19 @@ end;
 procedure TProfile.ButtonUpdateClick(Sender: TObject);
 begin
   frmProfileDetails.Caption := 'Profile Details - Update';
-  frmProfileDetails.Hint := DBGrid.Fields[0].Text;
+  frmProfileDetails.Hint := DBGrid.Fields[0].Text; //to store the selected ID, use the Hint property of the form
   frmProfileDetails.showmodal;
 end;
 
 procedure TProfile.ButtonCloseClick(Sender: TObject);
 begin
- close;
+ close;   //close the profile list
 end;
 
 procedure TProfile.ButtonCreateClick(Sender: TObject);
 begin
           frmProfileDetails.Caption := 'Profile Details - Add';
-          frmProfileDetails.ShowModal;
+          frmProfileDetails.ShowModal; //show profile form to create new user
 
 end;
 

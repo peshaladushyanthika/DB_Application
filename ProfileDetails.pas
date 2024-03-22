@@ -46,6 +46,7 @@ close;
 end;
 
 procedure TfrmProfileDetails.FormShow(Sender: TObject);
+//var SelectedID: Integer;
 begin
   if(self.Caption = 'Profile Details - Add') then
   begin
@@ -58,12 +59,15 @@ begin
   else if (self.Caption = 'Profile Details - Update') then
   begin
        //Display details of the selected ID
+//var SelectedID: Integer;
+//SelectedID := StrToInt(ID.Text);
+//SelectedID := StrToInt(Hint);
 
-       with DM.QrySelectDetails do  //I used a different dataset here to retain the data shown in the grid
+       with DM.QrySelectDetails do  //used a different dataset here to retain the data
           begin
             active := false;
             sql.Clear;
-            sql.Text := 'SELECT * FROM profile WHERE id = ' + self.Hint;    //self - refer to this form
+            sql.Text := 'SELECT * FROM profile WHERE id = ' + self.Hint;
             active := true;
           end;
 
@@ -83,6 +87,7 @@ procedure TfrmProfileDetails.SaveButtonClick(Sender: TObject);
   var DOBValue:TDateTime;
   FormatSettings: TFormatSettings;
   i: Integer;
+
 begin
   FormatSettings.ShortDateFormat := 'yyyy-mm-dd'; //declare the date format
   if (ProfileName.Text = '') or (Address.Text = '') then
@@ -103,21 +108,24 @@ begin
 //  TelephoneNumber := StringReplace(TelephoneNumber, '-', '', [rfReplaceAll]);
 //  TelephoneNumber := StringReplace(TelephoneNumber, '(', '', [rfReplaceAll]);
 //  TelephoneNumber := StringReplace(TelephoneNumber, ')', '', [rfReplaceAll]);
+
   if (Length(TelephoneNumber) <> 10) then  //check length of telephone
   begin
     ShowMessage('Please enter a valid 10-digit telephone number.');
     Exit; // Stop further processing
   end;
+
   if not TryStrToDate(DOB.Text, DOBValue,FormatSettings) then
   begin
     ShowMessage('Please enter a valid date of birth.');
     Exit; // Stop further processing
   end;
+
   if(self.Caption = 'Profile Details - Add') then
   begin
     if (ProfileName.Text <> '') and (Address.Text <> '') then
     begin
-      with DM.QryInsert do
+      with DM.QryInsert do   //insert data into db
             begin
                active := false;
                sql.Clear;
@@ -132,13 +140,12 @@ begin
             Showmessage('New record successfully added');
             Close;
     end;
-
   end
   else if (self.Caption = 'Profile Details - Update') then
   begin
     if (ProfileName.Text <> '') and (Address.Text <> '') then
     begin
-      with DM.QryUpdate do
+      with DM.QryUpdate do         //to update data into db
       begin
         active := false;
         sql.Clear;
